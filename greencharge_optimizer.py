@@ -4,8 +4,19 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import streamlit as st
 from datetime import datetime, timedelta
 import requests  # Added back for real API access
+
+# Streamlit layout
+st.set_page_config(page_title="GreenCharge Optimizer", layout="wide")
+st.title("🔋 GreenCharge Optimizer Dashboard")
+# Sidebar parameters
+st.sidebar.header("Battery Parameters")
+battery_capacity = st.sidebar.slider("Battery Capacity (kWh)", 5.0, 20.0, 10.0)
+max_charge_rate = st.sidebar.slider("Max Charge Rate (kWh/hour)", 0.5, 5.0, 2.0)
+charge_efficiency = st.sidebar.slider("Charge Efficiency", 0.8, 1.0, 0.95)
+price_threshold = st.sidebar.slider("Grid Price Threshold ($/kWh)", 0.10, 0.40, 0.22)
 
 # Parameters for OpenWeatherMap API
 api_key = "40838c75ffe84ed438563e6a228c7ddc"  # Replace with your actual API key
@@ -65,7 +76,7 @@ def optimize_battery(data):
     return data
 
 # Apply optimization
-data = optimize_battery(data)
+data = optimize_battery(data, battery_capacity, max_charge_rate, charge_efficiency, price_threshold)
 
 # Plotting results
 plt.figure(figsize=(12,6))
