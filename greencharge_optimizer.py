@@ -9,6 +9,12 @@ from datetime import datetime, timedelta
 import requests  # Added back for real API access
 
 # Streamlit layout
+st.subheader("🔄 Optimized Schedule")
+st.dataframe(data[['Hour', 'SolarGeneration_kWh', 'GridPrice_per_kWh', 'BatteryCharge', 'BatteryDischarge']])
+
+csv = data.to_csv(index=False).encode('utf-8')
+st.download_button("📥 Download CSV", data=csv, file_name='optimized_schedule.csv', mime='text/csv')
+
 st.set_page_config(page_title="GreenCharge Optimizer", layout="wide")
 st.title("🔋 GreenCharge Optimizer Dashboard")
 # Sidebar parameters
